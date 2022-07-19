@@ -13,7 +13,20 @@ const kartTemplate = `
     </div>
 `;
 
-const fotoNumaralari = [10, 20, 30, 20, 10, 40, 40, 30];
+//const fotoNumaralari = [10, 20, 30, 20, 10, 40, 40, 30];
+const rastgeleNumara = function(){
+  const arr =[];
+  for(let i=1;i<50;i++){
+    const a=(Math.floor(Math.random()*10)+1);
+    if(arr.find(x=>x===a))continue;
+    arr.push(a);
+    arr.push(a);
+    if(arr.length ===8) break;
+  }
+  arr.sort(() => Math.random()-0.5);
+  return arr;
+}
+const fotoNumaralari = rastgeleNumara();
 
 for (fotoNumara of fotoNumaralari) {
   const yenikart = document.createElement("div");
@@ -71,6 +84,25 @@ function kartTiklama(olay) {
   if (acikKartImg.src === secilenKartImg.src) {
     sayi = sayi + 1;
     document.getElementById("puan1").textContent = sayi;
+    
+    function gosterResim() {
+      if (sayi === 4) {
+        const bravoResim = document.createElement("img");
+        bravoResim.src = "./img/1.jpg";
+        document.getElementById("resim").append(bravoResim);
+       zaman = setTimeout (function(){
+        document.getElementById("resim").remove(bravoResim);
+       },3000);
+      }
+    }
+    gosterResim();
+    
+
+    
+
+    
+
+    
 
     //İki açık kart arasında eşleşme var.
     acikKart.classList.add("eslesti");
@@ -83,6 +115,8 @@ function kartTiklama(olay) {
       acikKart.removeEventListener("click", kartTiklama);
       secilenKart.removeEventListener("click", kartTiklama);
     }, 1000);
+
+    
   } else {
     //İki açık kartın görsel dosya adı birbirinden farklı, eşleşme yok, kartlar kapansın.
     setTimeout(() => {
